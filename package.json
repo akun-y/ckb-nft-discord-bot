@@ -1,5 +1,5 @@
 {
-  "name": "discordbot",
+  "name": "ckb-nft-discord-bot",
   "version": "1.0.0",
   "description": "Discord Bot",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Victoria Lo",
+  "author": "Rostra",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
