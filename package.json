@@ -33,6 +33,7 @@
     "serve": "node build/main.js"
   },
   "dependencies": {
+    "@ckb-lumos/base": "^0.17.0-rc8",
     "@discordx/importer": "^1.1.2",
     "@discordx/koa": "^1.0.7",
     "@discordx/pagination": "^1.2.0",
@@ -41,6 +42,8 @@
     "@nervina-labs/flashsigner": "^0.2.2",
     "@nervosnetwork/ckb-sdk-rpc": "^0.102.1",
     "@nervosnetwork/ckb-sdk-utils": "^0.102.1",
+    "ckb-js-toolkit": "^0.10.2",
+    "cross-fetch": "^3.1.5",
     "discord.js": "^13.6.0",
     "discordx": "^9.2.5",
     "dotenv": "^16.0.0",

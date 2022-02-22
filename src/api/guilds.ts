@@ -23,4 +23,11 @@ export class API {
   guilds(context: Context) {
     context.body = `${client.guilds.cache.map((g) => `${g.id}: ${g.name}\n`)}`;
   }
+
+  @Get('/sign-success')
+  verifySig(context: Context) {
+    // context.body = `${client.guilds.cache.map((g) => `${g.id}: ${g.name}\n`)}`;
+
+    context.body = context.request;
+  }
 }

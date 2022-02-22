@@ -44,7 +44,7 @@ export abstract class LinkWallet {
       DISCORD_VERIFICATION_SECRET,
       { expiresIn: "1h" }
     );
-    const successURL = "http://localhost:3000/"
+    const successURL = "http://localhost:3000/sign-success"
     const url = generateSignMessageURL(successURL, { message: token });
 
     interaction.reply({
