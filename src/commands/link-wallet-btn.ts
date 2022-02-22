@@ -4,10 +4,8 @@ import {
   CommandInteraction,
   MessageButton,
   MessageActionRow,
-  User,
-  GuildMember,
 } from "discord.js";
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
+import { ButtonComponent, Discord, Slash } from "discordx";
 import jwt from "jsonwebtoken";
 import { generateSignMessageURL } from "@nervina-labs/flashsigner"
 import * as dotenv from "dotenv";
