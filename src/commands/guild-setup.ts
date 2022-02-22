@@ -219,7 +219,7 @@ export abstract class GuildSetup {
     if (!guildConfigDoc.exists) {
       await interaction.reply({
         content:
-          "You haven't created any rules yet. Please run `/rule-add` and try again",
+          "You haven't created any rules yet. Please run `/guild-setup` and try again",
         ephemeral: true,
       });
       return;
