@@ -9,7 +9,7 @@ import {
 } from "discordx";
 // import { ping, status } from "../commands";
 import NotABot from "../guards/NotABot";
-import NotDM from "../guards/NotDM";
+import IsDM from "../guards/IsDM";
 // import Main from "../Main";
 // import { getGuildsOfServer } from "../service";
 // import logger from "../utils/logger";
@@ -70,7 +70,7 @@ abstract class SimpleCommands {
   // }
 
   @SimpleCommand("join")
-  @Guard(NotDM, NotABot)
+  @Guard(IsDM, NotABot)
   async join(command: SimpleCommandMessage): Promise<void> {
     // logger.verbose(
     //   `${command.prefix}join command was used by ${command.message.author.username}#${command.message.author.discriminator}`
