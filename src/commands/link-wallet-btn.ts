@@ -25,7 +25,7 @@ export abstract class LinkWallet {
 
     const helloBtn = new MessageButton()
       .setLabel("Link wallet")
-      .setEmoji("👋")
+      .setEmoji("🔗")
       .setStyle("PRIMARY")
       .setCustomId("link-wallet-btn");
 
