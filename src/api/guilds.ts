@@ -12,7 +12,6 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 
 const DISCORD_VERIFICATION_SECRET = process.env.DISCORD_VERIFICATION_SECRET || "secret";
-const BOT_MANAGER_ROLE = process.env.BOT_MANAGER_ROLE || "BOT_MANAGER_ROLE";
 console.log("DISCORD_VERIFICATION_SECRET: ", process.env.DISCORD_VERIFICATION_SECRET)
 
 @Router()
@@ -85,9 +84,12 @@ export class API {
       .doc(docKey)
       .get();
 
-    console.log('userDoc: ', userDoc)
     console.log('exists: ', userDoc.exists)
-    if (userDoc.exists) return;
+
+    if (userDoc.exists && userDoc.data()!.wallet === address) {
+      console.log('User info already exists')
+      return;
+    }
     await db
       .collection("users")
       .doc(docKey)
@@ -96,14 +98,14 @@ export class API {
     const guild = await client.guilds.fetch(guildId);
     const member = await guild.members.fetch(userId);
 
-    // const roleManager = await guild.roles.fetch();
+    // TODO: Add role to user
     const botManagerRole = guild.roles.cache.find(
-      (role) => role.name == BOT_MANAGER_ROLE
+      (role) => role.name == 'Rostra guild contributor'
     )!;
 
     console.log('botManagerRole: ', botManagerRole)
 
     member.roles.add(botManagerRole);
-    console.log('member.roles: ', member.roles)
+    console.log('role added: ', botManagerRole.name)
   }
 }
