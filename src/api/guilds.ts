@@ -90,10 +90,15 @@ export class API {
       console.log('User info already exists')
       return;
     }
-    await db
-      .collection("users")
-      .doc(docKey)
-      .set(user);
+
+    try {
+      await db
+        .collection("users")
+        .doc(docKey)
+        .set(user);
+    } catch (error) {
+      console.error('Error happened for saving user info: ', error)
+    }
 
     const guild = await client.guilds.fetch(guildId);
     const member = await guild.members.fetch(userId);
@@ -105,7 +110,11 @@ export class API {
 
     console.log('botManagerRole: ', botManagerRole)
 
-    member.roles.add(botManagerRole);
-    console.log('role added: ', botManagerRole.name)
+    try {
+      member.roles.add(botManagerRole);
+      console.log('role added: ', botManagerRole.name)
+    } catch (error) {
+      console.error('Error happened for adding role: ', error)
+    }
   }
 }
