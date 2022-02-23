@@ -1,7 +1,7 @@
 import { Get, Router } from "@discordx/koa";
 import type { Context } from "koa";
 import { client } from "../main.js";
-import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner'
+import { generateFlashsignerAddress } from '@nervina-labs/flashsigner'
 import NodeRsa from 'node-rsa';
 import { Buffer } from 'buffer';
 
@@ -37,8 +37,6 @@ export class API {
     const { lock, message, sig: signature } = data.result;
     const response = {
       message,
-      // 如果是从 response url 直接解析 signature 则需要取前 520 个字符
-      // 如果从 flashsigner-sdk 得到的参数则可以直接传入验签
       "signature": signature.slice(520),
       "pubkey": signature.slice(0, 520)
     }
@@ -56,5 +54,8 @@ export class API {
     )
 
     console.log(result)
+
+    const address = generateFlashsignerAddress(response.pubkey)
+    console.log('address: ', address)
   }
 }
