@@ -6,7 +6,17 @@ import NodeRsa from 'node-rsa';
 import { Buffer } from 'buffer';
 import db from "../database";
 import { User } from "../shared/firestoreTypes";
+import * as dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
+dotenv.config();
+
+const DISCORD_VERIFICATION_SECRET = process.env.DISCORD_VERIFICATION_SECRET || "";
+console.log("DISCORD_VERIFICATION_SECRET: ", process.env.DISCORD_VERIFICATION_SECRET)
+
+interface Decoded {
+  userId: string; guildId: string; iat: number; exp: number;
+}
 @Router()
 export class API {
   @Get("/")
@@ -60,21 +70,29 @@ export class API {
     console.log('address: ', address)
 
 
+    const decoded = jwt.verify(message, DISCORD_VERIFICATION_SECRET) as jwt.JwtPayload
+    console.log('decoded: ', decoded)
+    const { userId, guildId } = decoded
+
     const user: User = {
       wallet: address,
+      userId,
+      guildId,
     };
+
+    const docKey = `${guildId}-${userId}`
 
     const userDoc = await db
       .collection("users")
-      .doc(address)
+      .doc(docKey)
       .get();
 
     console.log('userDoc: ', userDoc)
+    console.log('exists: ', userDoc.exists)
     if (userDoc.exists) return;
     await db
       .collection("users")
-      .doc(address)
+      .doc(docKey)
       .set(user);
-
   }
 }

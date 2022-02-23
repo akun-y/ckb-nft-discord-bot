@@ -1,5 +1,7 @@
 export interface User {
   wallet: string;
+  userId: string;
+  guildId: string;
 }
 
 export type NFTRule = {
