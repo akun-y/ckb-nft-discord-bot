@@ -45,7 +45,7 @@ export abstract class LinkWallet {
       { expiresIn: "1h" }
     );
     const successURL = "http://localhost:3000/sign-success"
-    const url = generateSignMessageURL(successURL, { message: token });
+    const url = generateSignMessageURL(successURL, { message: token, isRaw: true });
 
     interaction.reply({
       content: `Greetings from the Rostra Guild Assistant! Please click [here](${url}) to link your terra wallet with your discord account.`,
