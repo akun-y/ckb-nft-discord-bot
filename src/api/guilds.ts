@@ -11,12 +11,10 @@ import jwt from "jsonwebtoken";
 
 dotenv.config();
 
-const DISCORD_VERIFICATION_SECRET = process.env.DISCORD_VERIFICATION_SECRET || "";
+const DISCORD_VERIFICATION_SECRET = process.env.DISCORD_VERIFICATION_SECRET || "secret";
+const BOT_MANAGER_ROLE = process.env.BOT_MANAGER_ROLE || "BOT_MANAGER_ROLE";
 console.log("DISCORD_VERIFICATION_SECRET: ", process.env.DISCORD_VERIFICATION_SECRET)
 
-interface Decoded {
-  userId: string; guildId: string; iat: number; exp: number;
-}
 @Router()
 export class API {
   @Get("/")
@@ -94,5 +92,18 @@ export class API {
       .collection("users")
       .doc(docKey)
       .set(user);
+
+    const guild = await client.guilds.fetch(guildId);
+    const member = await guild.members.fetch(userId);
+
+    // const roleManager = await guild.roles.fetch();
+    const botManagerRole = guild.roles.cache.find(
+      (role) => role.name == BOT_MANAGER_ROLE
+    )!;
+
+    console.log('botManagerRole: ', botManagerRole)
+
+    member.roles.add(botManagerRole);
+    console.log('member.roles: ', member.roles)
   }
 }
