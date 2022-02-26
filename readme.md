@@ -39,34 +39,29 @@
 
 # Content
 
-- [Demo](#demo)
 - [Installation](#installation)
 - [Use global command only](#use-global-command-only)
 - [Use CommonJS](#use-commonjs)
 - [Remove rest api server](#remove-rest-api-server)
-
-# Demo
-
-[CodeSandbox](https://codesandbox.io/s/github/oceanroleplay/discord.ts-example)
 
 # Installation
 
 **Clone Repository**
 
 ```bash
-git clone https://github.com/oceanroleplay/discord.ts-example
-```
-
-**Enter bot directory**
-
-```bash
-cd discord.ts-example
+git clone https://github.com/rebase-network/rostra-guild-assistant
 ```
 
 **Install Dependencies**
 
 ```bash
-npm install
+yarn
+```
+
+**Run your bot in dev env**
+
+```bash
+npm run start
 ```
 
 **Build your bot**
@@ -107,7 +102,7 @@ This repository uses guild commands instead of global commands by default. This 
 
 ## 1. How do I use global command only?
 
-### comment [this line in main.ts](https://github.com/oceanroleplay/discord.ts-example/blob/main/src/main.ts#L18)
+### comment [this line in main.ts](https://github.com/rebase-network/rostra-guild-assistant/blob/main/src/main.ts#L23)
 
 ## 2. How do I make specific guild command?
 
@@ -151,10 +146,10 @@ This repo is targed to use ECMAScript modules by default. Follow these steps to 
 ```ts
 async function run() {
   // with cjs
-  await importx(__dirname + "/{events,commands}/**/*.{ts,js}");
+  await importx(__dirname + '/{events,commands}/**/*.{ts,js}')
   // with ems
   // await importx(dirname(import.meta.url) + "/{events,commands}/**/*.{ts,js}");
-  client.login(process.env.BOT_TOKEN ?? ""); // provide your bot token
+  client.login(process.env.BOT_TOKEN ?? '') // provide your bot token
 }
 ```
 
