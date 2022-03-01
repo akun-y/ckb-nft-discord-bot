@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { Intents, Interaction, Message } from 'discord.js'
+import { GuildMember, Intents, Interaction, Message } from 'discord.js'
 import { Client } from 'discordx'
 import { dirname, importx } from '@discordx/importer'
 import { Koa } from '@discordx/koa'
@@ -58,6 +58,23 @@ client.on('interactionCreate', (interaction: Interaction) => {
 
 client.on('messageCreate', (message: Message) => {
   client.executeCommand(message)
+})
+
+client.on('guildMemberAdd', (guildMember: GuildMember) => {
+  // here I should check if the member is qualified to get this role
+  const roleName = 'Rostra guild contributor'
+  let role = guildMember.guild.roles.cache.find(
+    (role: any) => role.name === roleName
+  )
+  if (role) {
+    guildMember.roles.add(role)
+    // bot-test-2 channel
+    const channelId = '942799610324320347'
+    const channel = guildMember.guild.channels.cache.get(channelId)
+    if (channel?.isText()) {
+      channel.send(`Welcome <@${guildMember.user.id}> to our Rostra Guild!`)
+    }
+  }
 })
 
 async function run() {
