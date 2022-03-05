@@ -8,6 +8,7 @@ import db from '../database'
 import { User } from '../shared/firestoreTypes'
 import * as dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
+import { GuildConfig, GuildRule } from '../shared/firestoreTypes'
 
 dotenv.config()
 
@@ -102,19 +103,35 @@ export class API {
     const guild = await client.guilds.fetch(guildId)
     const member = await guild.members.fetch(userId)
 
-    // TODO: Add role to user
-    // check if user's address has nfts
-    const botManagerRole = guild.roles.cache.find(
-      (role) => role.name == 'Rostra guild contributor'
-    )!
+    const guildConfigDoc = await db
+      .collection('guildConfigs')
+      .doc(guildId)
+      .get()
 
-    console.log('botManagerRole: ', botManagerRole)
+    const guildConfigRules = (guildConfigDoc.data() as GuildConfig).rules
 
-    try {
-      member.roles.add(botManagerRole)
-      console.log('role added: ', botManagerRole.name)
-    } catch (error) {
-      console.error('Error happened for adding role: ', error)
+    const roleNames: string[] = []
+    guildConfigRules.forEach((guildRule: GuildRule) => {
+      if (Object.keys(guildRule.nft).length === 1) {
+        const nftAddresses = Object.keys(guildRule.nft)
+        // TODO: check if user's address has nfts
+        const address = nftAddresses[0]
+        const hasNft = true
+        if (hasNft && !roleNames.includes(guildRule.roleName)) {
+          roleNames.push(guildRule.roleName)
+        }
+      }
+    })
+    if (roleNames.length > 0) {
+      roleNames.forEach((name: string) => {
+        const role = guild.roles.cache.find((el) => el.name == name)!
+        try {
+          role && member.roles.add(role)
+          console.log('role added: ', name)
+        } catch (err) {
+          console.error('Error happened for adding role: ', err)
+        }
+      })
     }
   }
 }
