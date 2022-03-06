@@ -5,6 +5,7 @@ import { Client } from 'discordx'
 import { dirname, importx } from '@discordx/importer'
 import { Koa } from '@discordx/koa'
 import setupPermissions from './utils/setupPermissions'
+import { updateUserRoles } from './utils/updateUserRoles'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -49,7 +50,7 @@ client.once('ready', async () => {
 
   // cronjob to update discord roles once a day
   cron.schedule('0 0 * * *', () => {
-    console.log('run cron task')
+    updateUserRoles(client)
   })
 
   console.log('Bot started')
