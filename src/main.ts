@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import cron from 'node-cron'
 import { GuildMember, Intents, Interaction, Message } from 'discord.js'
 import { Client } from 'discordx'
 import { dirname, importx } from '@discordx/importer'
@@ -44,6 +45,11 @@ client.once('ready', async () => {
   client.guilds.cache.forEach((guild) => {
     console.log(`Registering commands for ${guild.name}`)
     setupPermissions(guild)
+  })
+
+  // cronjob to update discord roles once a day
+  cron.schedule('0 0 * * *', () => {
+    console.log('run cron task')
   })
 
   console.log('Bot started')
