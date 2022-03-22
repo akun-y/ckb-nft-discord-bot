@@ -95,10 +95,10 @@
     "@discordx/internal" "^1.0.2"
     tslib "^2.3.1"
 
-"@discordx/pagination@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@discordx/pagination/-/pagination-1.2.0.tgz#6edc04a47fdefd63f1f96b4c8a1182980818f348"
-  integrity sha512-O0e3CRvKJXT/hlGeKcUZUOhrafzeR/pWbVmRVulMZimpuNpIUYQaKCgHzNX5hsBqst46P+4sok4pSWyIdntW5A==
+"@discordx/pagination@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@discordx/pagination/-/pagination-2.0.1.tgz#b6485781cc6905cb6208d6b9b9f626515399eb10"
+  integrity sha512-eHDnAcnizkf07aTsXoA2MC7jfJoorNQbGQn+ytN00Q/Xug0XKvHMbC9BzXpWuYyp5AsFhCimiNoNzjFGlguX3w==
   dependencies:
     lodash "^4.17.21"
     tslib "^2.3.1"
@@ -275,13 +275,14 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@nervina-labs/flashsigner@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@nervina-labs/flashsigner/-/flashsigner-0.2.2.tgz#2ebfb4226fdf244cf0969b644b64f3f47ca339ee"
-  integrity sha512-+HPSzUiJmQn+C+ntnqeknDmvHI38L2rIeGDbflo4snxzXhv4HnLQHUJe2rddAU7DdSIrfDC9rJdqnZNyWEfrOw==
+"@nervina-labs/flashsigner@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@nervina-labs/flashsigner/-/flashsigner-0.2.4.tgz#8365e743e8295bb8afbd1c42be648d65ffd2b41d"
+  integrity sha512-ZzD++axAxlT7HgQGH6c5h7GDJ+u+ybKQQfUVZD+AfeZAY6aGpZMO/qD2P4k82fXWLryrYyp13Msjg54GCe13eQ==
   dependencies:
+    "@ckb-lumos/base" "^0.17.0-rc8"
+    ckb-js-toolkit "^0.10.2"
     url-parse "^1.5.4"
-    url-shim "^1.0.1"
 
 "@nervosnetwork/ckb-sdk-rpc@^0.102.1":
   version "0.102.1"
@@ -2529,11 +2530,6 @@ url-parse@^1.5.4:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
-
-url-shim@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/url-shim/-/url-shim-1.0.1.tgz#8842662b0f2edef8df4ebbe507466f04f771eb1b"
-  integrity sha512-8nwZkCP7pbI8ifcifTZSLRO3W+CWuh/mafPvc7utPRqgxAORnsZIzQ5K8LUsHiQ4mTtJrKRAJmW2ZHxQk0rKUA==
 
 util-deprecate@^1.0.1:
   version "1.0.2"
