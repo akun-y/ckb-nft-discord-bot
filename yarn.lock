@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@ckb-lumos/base@^0.17.0-rc8":
-  version "0.17.0-rc8"
-  resolved "https://registry.yarnpkg.com/@ckb-lumos/base/-/base-0.17.0-rc8.tgz#7f7490a2e028f609aeb3f96fb400a7836df9a187"
-  integrity sha512-SN/GAxJfO59mF2mcJId2kBEbcQldJ7cIGm4Yf2nC7BmXkc8x+95BpZCWSSQ8EGcGJoWzcOTRlE71s06aUxx5+g==
+"@ckb-lumos/base@^0.17.0-rc8", "@ckb-lumos/base@^0.17.0-rc9":
+  version "0.17.0-rc9"
+  resolved "https://registry.yarnpkg.com/@ckb-lumos/base/-/base-0.17.0-rc9.tgz#3ee4f63713fd26682f0fa0ec880b85ed010c4642"
+  integrity sha512-r57fDCOfjJD/oh8NKDg5L97zDsO1nNOipCA2koQW7dpL96SIPVo2aYK/iANM6LZW9lty1zrqVZU+GyZM4ow4hw==
   dependencies:
     "@ckb-lumos/bi" "^0.17.0-rc8"
-    "@ckb-lumos/toolkit" "^0.17.0-rc8"
+    "@ckb-lumos/toolkit" "0.17.0-rc9"
     "@types/lodash.isequal" "^4.5.5"
     blake2b "^2.1.3"
     js-xxhash "^1.0.4"
@@ -21,10 +21,10 @@
   dependencies:
     jsbi "^4.1.0"
 
-"@ckb-lumos/toolkit@^0.17.0-rc8":
-  version "0.17.0-rc8"
-  resolved "https://registry.yarnpkg.com/@ckb-lumos/toolkit/-/toolkit-0.17.0-rc8.tgz#66ecd2d7cc97384db10c329d3f3b768158eab3ba"
-  integrity sha512-xrIfUWq2J8bYAGmwTpSa4aavP705lyMTl6ErHvAT83K5rzgIONeM1dRKlVSJpwBOgrFKi9qbzEgsLU/GUm1QYw==
+"@ckb-lumos/toolkit@0.17.0-rc9":
+  version "0.17.0-rc9"
+  resolved "https://registry.yarnpkg.com/@ckb-lumos/toolkit/-/toolkit-0.17.0-rc9.tgz#8484d5eb7ef00053f9f061749d6a452ea70157ff"
+  integrity sha512-ZT/fL1Wp6R/1iBvfx1iWKbdMsr67PsE/U0eWh55zvp9bDjRXsBuM0F7d3PVyBTKZjnIkn/FLwo5+tmaLTaGrjg==
 
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
