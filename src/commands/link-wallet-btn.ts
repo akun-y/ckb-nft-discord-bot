@@ -46,10 +46,10 @@ export abstract class LinkWallet {
       { expiresIn: "1h" }
     );
 
-    const url = generateSignMessageURL(WALLET_SIGN_REDIRECT_URL, { message: token, isRaw: true });
+    const url = generateSignMessageURL(WALLET_SIGN_REDIRECT_URL, { message: token, isRaw: true,extra: { cotaId: '0x11218eb65781ef23fc630899de57539a98f883da'} });
 
     interaction.reply({
-      content: `Greetings from the Rostra Guild Assistant! Please click [here](${url}) to link your terra wallet with your discord account.`,
+      content: `Greetings from the Rostra.Guild.Assistant! Please click [here](${url}) to link your ckb wallet with your discord account.`,
       ephemeral: true,
     });
 

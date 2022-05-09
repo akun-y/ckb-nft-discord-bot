@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../discord/discord-player/example/music-bot"
+		},
+		{
+			"path": "../ckb-nft-telegram-bot"
+		}
+	],
+	"settings": {}
+}

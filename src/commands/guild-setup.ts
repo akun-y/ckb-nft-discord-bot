@@ -82,7 +82,7 @@ export abstract class GuildSetup {
 
     if (role?.position > botRole.position) {
       await interaction.reply({
-        content: `Please update the role hierarchy with 'Rostra Guild Assistant' above of ${role.name} and try again.`,
+        content: `Please update the role hierarchy with 'Rostra-Guild-Assistant' above of ${role.name} and try again.`,
         ephemeral: true,
       });
       return;

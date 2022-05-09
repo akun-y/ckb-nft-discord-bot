@@ -22,7 +22,11 @@ export const client = new Client({
     Intents.FLAGS.GUILD_VOICE_STATES
   ],
   // If you only want to use global commands only, comment this line
-  botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
+  botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
+
+  // enable partials to receive direct messages
+  partials: ["CHANNEL", "MESSAGE"],
+  silent: false,
 })
 
 client.once('ready', async () => {
@@ -39,13 +43,13 @@ client.once('ready', async () => {
   await client.initApplicationPermissions(true)
 
   // uncomment this line to clear all guild commands,
-  // useful when moving to global commands from guild commands
-  //  await client.clearApplicationCommands(
-  //    ...client.guilds.cache.map((g) => g.id)
-  //  );
+  //useful when moving to global commands from guild commands
+//    await client.clearApplicationCommands(
+//      ...client.guilds.cache.map((g) => g.id)
+//    );
   client.guilds.cache.forEach((guild) => {
     console.log(`Registering commands for ${guild.name}`)
-    setupPermissions(guild)
+    //setupPermissions(guild)
   })
 
   // cronjob to update discord roles once a day
@@ -53,7 +57,13 @@ client.once('ready', async () => {
     updateUserRoles(client)
   })
 
-  console.log('Bot started')
+
+    client.user?.setActivity({
+        name: "🎶 | NFT...",
+        type: "WATCHING"
+    });
+    client.user?.setStatus('online');
+    console.log('Bot started');
 })
 
 // When the bot is added to a server, configure the slash commands
@@ -98,5 +108,4 @@ async function run() {
 
   // ************* rest api section: end **********
 }
-
 run()
