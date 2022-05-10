@@ -9,7 +9,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const BOT_ROLE = process.env.BOT_ROLE;
-console.log('guild setup command BOT_ROLE: ', process.env.BOT_ROLE)
+console.log('guild setup command BOT_ROLE: ', BOT_ROLE)
 
 const slashGroupName = "guild-setup";
 
@@ -25,21 +25,17 @@ export abstract class GuildSetup {
     @SlashOption("quantity", {
       description: "The quantity of matching nfts that a user must hold in order to meet the rule."
     }) quantity: number,
-    // @SlashOption("token-ids", {
-    //   description: "A list of token ids that the rule is restricted to.",
-    //   type: "STRING",
-    // }) tokenIds: string[],
     @SlashOption("role", {
       description: "The role to give to users which meet this rule.",
       type: "MENTIONABLE"
     }) role: Role,
     interaction: CommandInteraction
   ): Promise<void> {
+
     // configure the server settings
     // const nftAddress = interaction.options.getString("nft-address");
     // const role = interaction.options.getRole("role");
     const rawQuantity = interaction.options.getNumber("quantity");
-    //const rawTokenIds = interaction.options.getString("token-ids");
 
     // verify that nftAddress and role are defined
     if (!nftAddress || !role) {
@@ -49,29 +45,6 @@ export abstract class GuildSetup {
       });
       return;
     }
-
-    // verify that we can parse tokenIds
-    // let tokenIds;
-    // try {
-    //   tokenIds = rawTokenIds ? JSON.parse(rawTokenIds) : undefined;
-    //   // check that the tokenIds is properly formatted
-    //   if (
-    //     tokenIds &&
-    //     !(
-    //       Array.isArray(tokenIds) &&
-    //       tokenIds.every((tokenId) => typeof tokenId == "string")
-    //     )
-    //   ) {
-    //     throw new Error("Token ids are not an array of strings");
-    //   }
-    // } catch {
-    //   await interaction.reply({
-    //     content:
-    //       'Could not parse token ids, please pass token ids in the following format: ["1", "2", "4"]',
-    //     ephemeral: true,
-    //   });
-    //   return;
-    // }
 
     // const quantity = rawQuantity ? rawQuantity : 1;
 
@@ -87,7 +60,7 @@ export abstract class GuildSetup {
       });
       return;
     }
-
+    console.log("role:",role)
     const newRule: GuildRule = {
       version: "1.0",
       nft: {
@@ -98,7 +71,7 @@ export abstract class GuildSetup {
       },
       udt: {},  // user defined token
       nativeToken: {},
-      roleName: role.name,
+      roleName: role.name??BOT_ROLE,
     };
 
     const guildConfigDoc = await db
@@ -109,7 +82,9 @@ export abstract class GuildSetup {
     const guildConfig: GuildConfig = guildConfigDoc.exists
       ? (guildConfigDoc.data() as GuildConfig)
       : { rules: [] };
-
+      
+    console.log("newRule:", newRule)
+      
     guildConfig.rules.push(newRule);
 
     // update the db
@@ -178,7 +153,7 @@ export abstract class GuildSetup {
         },
       },
       nativeToken: {},
-      roleName: role.name,
+      roleName: role.name??BOT_ROLE,
     };
 
     const guildConfigDoc = await db

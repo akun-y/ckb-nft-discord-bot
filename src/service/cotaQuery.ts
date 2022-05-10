@@ -5,10 +5,10 @@ const { addressToScript, serializeScript } = pkg
 
 const service = {
     aggregator: new Aggregator({
-        // registryUrl: 'http://cota-registry-aggregator.rostra.xyz',
-        // cotaUrl: 'http://cota-aggregator.rostra.xyz',
+        //registryUrl: 'http://cota-registry-aggregator.rostra.xyz',
+        //cotaUrl: 'http://cota-aggregator.rostra.xyz',
         registryUrl: 'https://cota.nervina.dev/registry-aggregator',
-        cotaUrl: 'https://cota.nervina.dev/aggregator '
+        cotaUrl: 'https://cota.nervina.dev/aggregator'
     })
 }
 

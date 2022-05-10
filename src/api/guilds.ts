@@ -1,7 +1,7 @@
 import { Get, Router } from '@discordx/koa'
 import type { Context } from 'koa'
 import { client } from '../main.js'
-import { generateFlashsignerAddress } from '@nervina-labs/flashsigner'
+import { generateFlashsignerAddress,Config } from '@nervina-labs/flashsigner'
 import NodeRsa from 'node-rsa'
 import { Buffer } from 'buffer'
 import db from '../database'
@@ -13,6 +13,7 @@ import { getCotaCount } from '../service/cotaQuery'
 
 dotenv.config()
 
+const NERVINA_CHAIN_TYPE = process.env.NERVINA_CHAIN_TYPE=='testnet' ?'testnet':'mainnet'
 const DISCORD_VERIFICATION_SECRET =
     process.env.DISCORD_VERIFICATION_SECRET || 'secret'
 console.log(
@@ -46,7 +47,6 @@ export class API {
     async verifySig(context: Context) {
         const { flashsigner_data } = context.request.query
         const data = JSON.parse(flashsigner_data as string)
-        console.log("data:", data)
         const { message, sig: signature } = data.result
         const response = {
             message,
@@ -67,7 +67,8 @@ export class API {
         context.body = `Signature verified result: ${isSigValid}`
 
         if (!isSigValid) return
-
+        //Config.setChainType('mainnet' /* or 'testnet' */)
+        Config.setChainType(NERVINA_CHAIN_TYPE)
         const address = generateFlashsignerAddress(response.pubkey)
         console.log('address: ', address)
 
@@ -75,7 +76,6 @@ export class API {
             message,
             DISCORD_VERIFICATION_SECRET
         ) as jwt.JwtPayload
-        console.log('decoded: ', decoded)
         const { userId, guildId } = decoded
 
         const user: User = {
@@ -83,11 +83,9 @@ export class API {
             userId,
             guildId
         }
-        console.log('user: ', user)
 
         const docKey = `${guildId}-${userId}`
         const userDoc = await db.collection('users').doc(docKey).get()
-        console.log('exists: ', userDoc.exists)
         if (userDoc.exists && userDoc.data()!.wallet === address) {
             console.log('User info already exists')
             context.body = `User info already exists: ${address}`
@@ -99,34 +97,33 @@ export class API {
         .get()
 
         const guildConfigRules = (guildConfigDoc.data() as GuildConfig).rules
-        console.log('guildConfigRules: ', guildConfigRules)
 
         const guild = await client.guilds.fetch(guildId)
         const member = await guild.members.fetch(userId)
 
-        var cotaId =''
         const roleNames: string[] = []
         guildConfigRules.forEach(async (guildRule: GuildRule) => {
             if (Object.keys(guildRule.nft).length === 1) {
                 const nftAddresses = Object.keys(guildRule.nft)
                 // TODO: check if user's address has nfts
                 const address = nftAddresses[0]
-                cotaId = address
                 
                 const rs = await getCotaCount(user.wallet,address)
-                console.log('getCotaCount: ', rs)
-                const hasNft = rs > 0 ? true : false
-                
+                console.log(`getCotaCount: ${rs}-${user.wallet}-${address}`)
+                const hasNft = rs > 0 
                 if (hasNft && !roleNames.includes(guildRule.roleName)) {
                     roleNames.push(guildRule.roleName)
                 }
                 if (hasNft) {
                     try {
                         await db.collection('users').doc(docKey).set(user)
+                        context.body = "link ckb wallet success!"
+                        return
                     } catch (error) {
                         console.error('Error happened for saving user info: ', error)
                     }
                 } 
+                context.body = `Current User has no NFT(${user.wallet})`
             }
         })
         if (roleNames.length > 0) {
@@ -139,9 +136,11 @@ export class API {
                     console.error('Error happened for adding role: ', err)
                 }
             })
-        }else {
-            context.body = `${user.userId} has no NFT(${cotaId})`
         }
     }
+}
+
+function ChainType(arg0: string): string | undefined {
+    throw new Error('Function not implemented.')
 }
 
