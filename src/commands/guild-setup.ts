@@ -25,10 +25,10 @@ export abstract class GuildSetup {
     @SlashOption("quantity", {
       description: "The quantity of matching nfts that a user must hold in order to meet the rule."
     }) quantity: number,
-    @SlashOption("token-ids", {
-      description: "A list of token ids that the rule is restricted to.",
-      type: "STRING",
-    }) tokenIds: string[],
+    // @SlashOption("token-ids", {
+    //   description: "A list of token ids that the rule is restricted to.",
+    //   type: "STRING",
+    // }) tokenIds: string[],
     @SlashOption("role", {
       description: "The role to give to users which meet this rule.",
       type: "MENTIONABLE"
@@ -39,7 +39,7 @@ export abstract class GuildSetup {
     // const nftAddress = interaction.options.getString("nft-address");
     // const role = interaction.options.getRole("role");
     const rawQuantity = interaction.options.getNumber("quantity");
-    const rawTokenIds = interaction.options.getString("token-ids");
+    //const rawTokenIds = interaction.options.getString("token-ids");
 
     // verify that nftAddress and role are defined
     if (!nftAddress || !role) {
@@ -52,26 +52,26 @@ export abstract class GuildSetup {
 
     // verify that we can parse tokenIds
     // let tokenIds;
-    try {
-      tokenIds = rawTokenIds ? JSON.parse(rawTokenIds) : undefined;
-      // check that the tokenIds is properly formatted
-      if (
-        tokenIds &&
-        !(
-          Array.isArray(tokenIds) &&
-          tokenIds.every((tokenId) => typeof tokenId == "string")
-        )
-      ) {
-        throw new Error("Token ids are not an array of strings");
-      }
-    } catch {
-      await interaction.reply({
-        content:
-          'Could not parse token ids, please pass token ids in the following format: ["1", "2", "4"]',
-        ephemeral: true,
-      });
-      return;
-    }
+    // try {
+    //   tokenIds = rawTokenIds ? JSON.parse(rawTokenIds) : undefined;
+    //   // check that the tokenIds is properly formatted
+    //   if (
+    //     tokenIds &&
+    //     !(
+    //       Array.isArray(tokenIds) &&
+    //       tokenIds.every((tokenId) => typeof tokenId == "string")
+    //     )
+    //   ) {
+    //     throw new Error("Token ids are not an array of strings");
+    //   }
+    // } catch {
+    //   await interaction.reply({
+    //     content:
+    //       'Could not parse token ids, please pass token ids in the following format: ["1", "2", "4"]',
+    //     ephemeral: true,
+    //   });
+    //   return;
+    // }
 
     // const quantity = rawQuantity ? rawQuantity : 1;
 
@@ -93,7 +93,6 @@ export abstract class GuildSetup {
       nft: {
         [nftAddress]: {
           // only include tokenIds if defined
-          ...(tokenIds && { tokenIds }),
           quantity,
         },
       },
