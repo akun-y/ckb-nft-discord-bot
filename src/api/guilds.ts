@@ -70,7 +70,7 @@ export class API {
         //Config.setChainType('mainnet' /* or 'testnet' */)
         Config.setChainType(NERVINA_CHAIN_TYPE)
         const address = generateFlashsignerAddress(response.pubkey)
-        console.log('address: ', address)
+        console.log('address: ',NERVINA_CHAIN_TYPE, address)
 
         const decoded = jwt.verify(
             message,
@@ -113,12 +113,21 @@ export class API {
                 const hasNft = rs > 0 
                 if (hasNft && !roleNames.includes(guildRule.roleName)) {
                     roleNames.push(guildRule.roleName)
+
+                    const role = guild.roles.cache.find((el) => el.name == guildRule.roleName)!
+                    try {
+                        role && member.roles.add(role)
+                        console.log('role added: ', guildRule.roleName)
+                    } catch (err) {
+                        console.error('Error happened for adding role: ', err)
+                    }
+
                 }
                 if (hasNft) {
                     try {
                         await db.collection('users').doc(docKey).set(user)
                         context.body = "link ckb wallet success!"
-                        return
+                        //return
                     } catch (error) {
                         console.error('Error happened for saving user info: ', error)
                     }
@@ -126,17 +135,18 @@ export class API {
                 context.body = `Current User has no NFT(${user.wallet})`
             }
         })
-        if (roleNames.length > 0) {
-            roleNames.forEach((name: string) => {
-                const role = guild.roles.cache.find((el) => el.name == name)!
-                try {
-                    role && member.roles.add(role)
-                    console.log('role added: ', name)
-                } catch (err) {
-                    console.error('Error happened for adding role: ', err)
-                }
-            })
-        }
+        // if (roleNames.length > 0) {
+        //     roleNames.forEach((name: string) => {
+        //         const role = guild.roles.cache.find((el) => el.name == name)!
+        //         try {
+        //             role && member.roles.add(role)
+        //             console.log('role added: ', name)
+        //         } catch (err) {
+        //             console.error('Error happened for adding role: ', err)
+        //         }
+
+        //     })
+        // }
     }
 }
 
