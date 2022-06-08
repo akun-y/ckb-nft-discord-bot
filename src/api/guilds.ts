@@ -96,7 +96,7 @@ export class API {
         .doc(guildId)
         .get()
 
-        const guildConfigRules = (guildConfigDoc.data() as GuildConfig).rules
+        const guildConfigRules = (guildConfigDoc.data() as GuildConfig)?.rules
 
         const guild = await client.guilds.fetch(guildId)
         const member = await guild.members.fetch(userId)
