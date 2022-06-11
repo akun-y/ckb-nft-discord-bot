@@ -10,6 +10,7 @@ WALLET_SIGN_REDIRECT_URL=http://localhost:3000/sign-success
 #testnet,mainnet
 NERVINA_CHAIN_TYPE=testnet
 ```
+
 ### 2.Get BOT_TOKEN：https://discord.com/developers/applications
 - a. New Application
 ![C824CC3A-7E7F-47CF-9FBE-C3C7A0D8B3F3](https://user-images.githubusercontent.com/3693411/172654229-79ecee70-2b49-4d94-a8bc-81734d588ca9.png)
